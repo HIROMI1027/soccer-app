@@ -34,7 +34,8 @@
     const Goal = ({ className }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 13V2"/><path d="M5 21a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5z"/></svg>);
 
     function SoccerPracticeApp() {
-      const SECRET_PASSWORD = '1004';
+      // 合言葉：TNK
+      const SECRET_PASSWORD = 'TNK';
       const [isAuthenticated, setIsAuthenticated] = useState(false);
       const [inputPassword, setInputPassword] = useState('');
       const [passwordError, setPasswordError] = useState(false);
@@ -47,6 +48,7 @@
       const [isEditingGoal, setIsEditingGoal] = useState(false);
       const [tempGoal, setTempGoal] = useState('');
 
+      // 15本分の初期練習動画データ（スタンプはすべて0）
       const initialVideos = [
         {
           id: '1',
@@ -54,7 +56,7 @@
           target: '左右どちらでも3回スムーズに成功させる！',
           tips: 'ボールを触る瞬間に、逆足の膝を深く曲げて相手の重心を完全に揺さぶるのが極意！',
           url: 'https://vjs.zencdn.net/v/oceans.mp4',
-          stampCount: 9,
+          stampCount: 0,
           reward: '新しいサッカーボール or スパイク購入！ 👟⚽️'
         },
         {
@@ -63,7 +65,7 @@
           target: 'トップスピードに乗ったまま軸足の後ろを通す！',
           tips: 'キックの振りかぶりを大きく見せることで、DFを完全に騙すことができるぞ！',
           url: 'https://vjs.zencdn.net/v/oceans.mp4',
-          stampCount: 29,
+          stampCount: 0,
           reward: '好きなアイス＆ジュースセット！ 🍨ジュース'
         },
         {
@@ -74,6 +76,114 @@
           url: '',
           stampCount: 0,
           reward: 'ゲームプレイ時間 30分延長権！ 🎮'
+        },
+        {
+          id: '4',
+          title: '04. インステップキック（無回転シュート） ⚽️',
+          target: '足の甲の固い場所にしっかり当てて強いボールを蹴る！',
+          tips: '足首を下に真っ直ぐ固定して、振りぬいた足を真っ直ぐ伸ばすのがコツ！',
+          url: '',
+          stampCount: 0,
+          reward: 'ご褒美チケット獲得！ 🎟️'
+        },
+        {
+          id: '5',
+          title: '05. ルーレット（マルセイユルーレット） ⚽️',
+          target: '相手の目の前で360度回転してかわす！',
+          tips: '1足目でボールを止めて、2足目の足裏で引き寄せながら体を反転させよう！',
+          url: '',
+          stampCount: 0,
+          reward: '好きなサッカーカード1パック！ 🃏'
+        },
+        {
+          id: '6',
+          title: '06. クライフターン ⚽️',
+          target: 'キックのフリから軸足の後ろにボールをカット！',
+          tips: '目線をゴールの方向へしっかり向けることで相手を誘い出そう！',
+          url: '',
+          stampCount: 0,
+          reward: 'おやつスペシャルセット！ 🍫'
+        },
+        {
+          id: '7',
+          title: '07. ファーストタッチ（ピタッと止める） ⚽️',
+          target: '強いパスを次の動作がしやすい場所にコントロール！',
+          tips: '足に当たる瞬間に少し足を引き寄せてクッションのように吸収しよう！',
+          url: '',
+          stampCount: 0,
+          reward: 'ジュース1本ゲット！ 🥤'
+        },
+        {
+          id: '8',
+          title: '08. エラシコ（アウト→イン瞬時切り替え） ⚽️',
+          target: '1回の足の振りで外から内へボールを動かす！',
+          tips: '足首の柔らかさが命！外側に押し出してすぐ内側へ巻き込もう！',
+          url: '',
+          stampCount: 0,
+          reward: '好きなテレビ番組の視聴権！ 📺'
+        },
+        {
+          id: '9',
+          title: '09. ヘディングシュート ⚽️',
+          target: 'おでこの中心でボールを捉えて叩きつける！',
+          tips: '目を閉じずにボールを最後まで見て、首をしっかり振って押し込もう！',
+          url: '',
+          stampCount: 0,
+          reward: 'ご褒美スタンプ2倍券！ 🌟'
+        },
+        {
+          id: '10',
+          title: '10. ロングパス（浮き球） ⚽️',
+          target: 'ボールの下に足先を滑り込ませて遠くへ飛ばす！',
+          tips: '少し斜め後ろからアプローチして、重心を少し後ろに残して蹴ろう！',
+          url: '',
+          stampCount: 0,
+          reward: 'サッカーショップでお買い物権！ 🛍️'
+        },
+        {
+          id: '11',
+          title: '11. 逆足シュート・トレーニング ⚽️',
+          target: '利き足じゃない方でも狙ったコースに蹴り込む！',
+          tips: '軸足の位置を利き足と同じようにボールの真横に置くことを一番に意識！',
+          url: '',
+          stampCount: 0,
+          reward: '好きな漫画1冊購入！ 📖'
+        },
+        {
+          id: '12',
+          title: '12. マシューズフェイント ⚽️',
+          target: 'インサイドで触ってアウトで一気に加速突破！',
+          tips: '最初のインサイドで大きく体重をかけて相手の足を止めよう！',
+          url: '',
+          stampCount: 0,
+          reward: '外食リクエスト権！ 🍕'
+        },
+        {
+          id: '13',
+          title: '13. ダイレクトシュート ⚽️',
+          target: '転がってきたボールを止めずに一発で決める！',
+          tips: 'ボールが来る前に助走を合わせて、コンパクトに足を振る！',
+          url: '',
+          stampCount: 0,
+          reward: 'ゲーム時間延長権！ 🎮'
+        },
+        {
+          id: '14',
+          title: '14. スルーパス・レシーブ ⚽️',
+          target: '相手DFの背後へ走り込んでボールを受ける！',
+          tips: '出し手と目を合わせて、パスが出る瞬間にスプリントを開始しよう！',
+          url: '',
+          stampCount: 0,
+          reward: 'スペシャルおやつ獲得！ ケーキ'
+        },
+        {
+          id: '15',
+          title: '15. フリーキック（壁越えシュート） ⚽️',
+          target: '壁の上を越えてゴールの隅に突き刺す！',
+          tips: 'ボールの下から内側へドライブをかける意識で擦り上げる！',
+          url: '',
+          stampCount: 0,
+          reward: '★完全コンプリート特別記念品！ 🏆'
         }
       ];
 
@@ -129,9 +239,9 @@
       const handleAddStamp = (videoId) => {
         setVideos(prev => prev.map(v => {
           if (v.id === videoId) {
-            if (v.stampCount >= 30) return v;
+            if (v.stampCount >= 25) return v; // 全25個に変更
             const newCount = v.stampCount + 1;
-            if (newCount === 30) {
+            if (newCount === 25) {
               setRewardModalData({
                 title: v.title,
                 rewardText: v.reward || '特別ご褒美達成！'
@@ -185,7 +295,7 @@
           tips: newTips || 'フォームと軸足をしっかり意識！',
           url: newUrl,
           stampCount: 0,
-          reward: '30回達成のご褒美（編集可能）'
+          reward: '25回達成のご褒美（編集可能）'
         };
         setVideos([...videos, newVid]);
         setNewTitle(''); setNewTarget(''); setNewTips(''); setNewUrl('');
@@ -193,7 +303,7 @@
       };
 
       const totalStamps = videos.reduce((acc, v) => acc + v.stampCount, 0);
-      const maxStamps = videos.length * 30;
+      const maxStamps = videos.length * 25; // 全25個 × 15本
       const progressPercent = maxStamps > 0 ? Math.round((totalStamps / maxStamps) * 100) : 0;
       const playerLevel = Math.floor(totalStamps / 5) + 1;
 
@@ -207,7 +317,7 @@
               <div>
                 <span className="text-[10px] font-black text-lime-400 tracking-widest uppercase block mb-1">MEMBERS ONLY</span>
                 <h1 className="text-xl font-black text-white italic">自主練マスター</h1>
-                <p className="text-xs text-slate-400 mt-2 font-bold">合言葉（パスワード）を入力してログインしてね！</p>
+                <p className="text-xs text-slate-400 mt-2 font-bold">合言葉（パスワード）を入力してね！</p>
               </div>
 
               <form onSubmit={handlePasswordSubmit} className="space-y-3">
@@ -217,12 +327,12 @@
                     type="password"
                     value={inputPassword}
                     onChange={(e) => setInputPassword(e.target.value)}
-                    placeholder="パスワードを入力"
+                    placeholder="合言葉を入力"
                     className="w-full bg-slate-950 border-2 border-slate-800 focus:border-lime-400 rounded-xl py-2.5 pl-9 pr-3 text-white text-sm outline-none font-black"
                   />
                 </div>
                 {passwordError && (
-                  <p className="text-xs font-bold text-rose-400">パスワードがちがうよ！もう一度確かめてね。</p>
+                  <p className="text-xs font-bold text-rose-400">合言葉がちがうよ！「TNK」と入力してね。</p>
                 )}
                 <button 
                   type="submit"
@@ -365,7 +475,7 @@
           <div className="space-y-9">
             {videos.map((video, index) => {
               const count = video.stampCount;
-              const isMaster = count >= 30;
+              const isMaster = count >= 25; // 25回でコンプリート
               const isEven = index % 2 === 1;
 
               const borderClass = isMaster 
@@ -378,7 +488,7 @@
                 ? 'bg-pink-500/20 text-pink-300 border-pink-500/40' 
                 : 'bg-lime-400/20 text-lime-300 border-lime-400/40';
 
-              const buttonBgClass = count >= 30
+              const buttonBgClass = count >= 25
                 ? 'bg-slate-800 text-slate-500 border-2 border-slate-700'
                 : isEven
                 ? 'bg-gradient-to-r from-pink-500 via-rose-400 to-pink-500 text-slate-950 shadow-pink-500/30 hover:brightness-110'
@@ -393,7 +503,7 @@
                 >
                   {isMaster && (
                     <div className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 text-slate-950 font-black text-xs py-1.5 px-4 text-center tracking-widest uppercase flex items-center justify-center gap-1 shadow-lg">
-                      <Star className="w-4 h-4" /> 30回達成 MASTER COMPLETE! <Star className="w-4 h-4" />
+                      <Star className="w-4 h-4" /> 25回達成 MASTER COMPLETE! <Star className="w-4 h-4" />
                     </div>
                   )}
 
@@ -402,14 +512,14 @@
                       DRILL #{index + 1}
                     </span>
                     <span className="text-xs font-black text-slate-200 flex items-center gap-1">
-                      スタンプ: <span className={isEven ? 'text-pink-400 text-base font-black' : 'text-lime-400 text-base font-black'}>{count}</span> / 30 回 ⚽️
+                      スタンプ: <span className={isEven ? 'text-pink-400 text-base font-black' : 'text-lime-400 text-base font-black'}>{count}</span> / 25 回 ⚽️
                     </span>
                   </div>
 
                   <div className="relative aspect-video bg-slate-950 flex flex-col items-center justify-center overflow-hidden">
                     {hasError ? (
                       <div className="text-center p-4 space-y-2">
-                        <div className="text-5xl animate-bounce">⚽️👟🥅</div>
+                        <div className="text-5xl animate-bounce">⚽️👟局</div>
                         <p className="text-xs font-black text-slate-200">自主練ビデオサンプル</p>
                         <p className="text-[10px] font-bold text-slate-500">（右上のボタンから動画を選択・変更できます）</p>
                       </div>
@@ -449,10 +559,11 @@
                       </div>
                     </div>
 
+                    {/* スタンプカード（全25個：5個刻みでビッグスタンプ） */}
                     <div className="bg-slate-950 p-4 rounded-3xl border-2 border-slate-800 space-y-3.5">
                       <div className="flex justify-between items-center">
                         <span className="text-xs font-black text-white flex items-center gap-1.5">
-                          <ShieldCheck className={`w-4 h-4 ${isEven ? 'text-pink-400' : 'text-lime-400'}`} /> 30回スタンプカード ⚽️
+                          <ShieldCheck className={`w-4 h-4 ${isEven ? 'text-pink-400' : 'text-lime-400'}`} /> 25回スタンプカード ⚽️
                         </span>
                         <button 
                           onClick={() => handleReduceStamp(video.id)} 
@@ -462,38 +573,39 @@
                         </button>
                       </div>
 
-                      <div className="grid grid-cols-10 gap-1.5">
-                        {[...Array(30)].map((_, idx) => {
+                      {/* 25マス配置 */}
+                      <div className="grid grid-cols-5 gap-2">
+                        {[...Array(25)].map((_, idx) => {
                           const number = idx + 1;
                           const isStamped = number <= count;
-                          const isSpecialStamp = number === 10 || number === 20;
-                          const isGoal = number === 30;
+                          const isBigStamp = number === 5 || number === 10 || number === 15 || number === 20;
+                          const isGoal = number === 25;
 
                           return (
                             <div 
                               key={idx}
-                              className={`aspect-square rounded-xl border-2 flex items-center justify-center relative text-xs font-black transition-all duration-300 ${
+                              className={`aspect-square rounded-2xl border-2 flex flex-col items-center justify-center relative font-black transition-all duration-300 ${
                                 isStamped
                                   ? isGoal
-                                    ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-amber-200 text-slate-950 shadow-lg shadow-amber-500/40 scale-110 text-base'
-                                    : isSpecialStamp
+                                    ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-amber-200 text-slate-950 shadow-lg shadow-amber-500/40 scale-105 text-lg'
+                                    : isBigStamp
                                     ? 'bg-gradient-to-br from-purple-500 to-pink-500 border-pink-300 text-white shadow-lg shadow-pink-500/40 scale-105 text-base'
                                     : isEven
-                                    ? 'bg-gradient-to-br from-pink-500 to-rose-600 border-pink-300 text-white shadow-md shadow-pink-500/30 scale-105 text-sm'
-                                    : 'bg-gradient-to-br from-lime-400 to-emerald-500 border-lime-300 text-slate-950 shadow-md shadow-lime-500/30 scale-105 text-sm'
+                                    ? 'bg-gradient-to-br from-pink-500 to-rose-600 border-pink-300 text-white shadow-md shadow-pink-500/30 text-sm'
+                                    : 'bg-gradient-to-br from-lime-400 to-emerald-500 border-lime-300 text-slate-950 shadow-md shadow-lime-500/30 text-sm'
                                   : isGoal
                                   ? 'bg-amber-400/20 border-amber-400/60 text-amber-300 text-sm'
-                                  : isSpecialStamp
+                                  : isBigStamp
                                   ? 'bg-purple-500/20 border-purple-500/50 text-pink-300 text-sm'
-                                  : 'bg-slate-900 border-slate-800 text-slate-600'
+                                  : 'bg-slate-900 border-slate-800 text-slate-600 text-xs'
                               }`}
                             >
                               {isStamped ? (
-                                isGoal ? '🏆' : isSpecialStamp ? (number === 10 ? '🔥' : '⚡️') : '⚽️'
+                                isGoal ? '🏆' : isBigStamp ? (number === 5 ? '🔥' : number === 10 ? '⚡️' : number === 15 ? '✨' : '💎') : '⚽️'
                               ) : isGoal ? (
                                 '🏆'
-                              ) : isSpecialStamp ? (
-                                '✨'
+                              ) : isBigStamp ? (
+                                <span className="text-[11px] text-pink-400 font-black">★{number}</span>
                               ) : (
                                 number
                               )}
@@ -505,17 +617,17 @@
                       <div className="pt-2 border-t-2 border-slate-800 space-y-2">
                         <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 px-1">
                           <span className="flex items-center gap-1 text-pink-300">
-                            <Sparkles className="w-3.5 h-3.5" /> 10回&20回：特大スタンプ！
+                            <Sparkles className="w-3.5 h-3.5" /> 5回刻み：ビッグスタンプ！
                           </span>
-                          <span className="text-amber-300">30回クリアでご褒美GET! 🎁</span>
+                          <span className="text-amber-300">25回でご褒美GET! 🎁</span>
                         </div>
 
                         <div className={`p-3 rounded-2xl border-2 flex items-center justify-between gap-2 ${
-                          count >= 30 ? 'bg-amber-400/20 border-amber-400/80 text-amber-200 shadow-md' : 'bg-slate-900 border-slate-800'
+                          count >= 25 ? 'bg-amber-400/20 border-amber-400/80 text-amber-200 shadow-md' : 'bg-slate-900 border-slate-800'
                         }`}>
                           <div className="flex items-center gap-2 overflow-hidden">
-                            <span className={`text-[11px] font-black px-2.5 py-1 rounded-xl shrink-0 ${count >= 30 ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 text-slate-300'}`}>
-                              🎁 30回のご褒美
+                            <span className={`text-[11px] font-black px-2.5 py-1 rounded-xl shrink-0 ${count >= 25 ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 text-slate-300'}`}>
+                              🎁 25回のご褒美
                             </span>
                             {editingRewardVideoId === video.id ? (
                               <input 
@@ -540,11 +652,11 @@
 
                     <button
                       onClick={() => handleAddStamp(video.id)}
-                      disabled={count >= 30}
+                      disabled={count >= 25}
                       className={`w-full py-4 rounded-2xl font-black text-base tracking-wide flex items-center justify-center gap-2 transition-all shadow-2xl active:scale-95 ${buttonBgClass}`}
                     >
                       <Flame className="w-5 h-5" />
-                      {count >= 30 ? '30回コンプリート！ 🏆' : '今日やったよ！スタンプを押す ⚽️'}
+                      {count >= 25 ? '25回コンプリート！ 🏆' : '今日やったよ！スタンプを押す ⚽️'}
                     </button>
                   </div>
                 </div>
@@ -584,7 +696,7 @@
             <div className="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
               <div className="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-3 border-amber-400 rounded-3xl p-6 w-full max-w-sm text-center space-y-4 shadow-2xl shadow-amber-500/30">
                 <div className="text-6xl animate-bounce">🏆⚽️🎁</div>
-                <h2 className="text-2xl font-black text-amber-300 tracking-wide">30回完全コンプリート！</h2>
+                <h2 className="text-2xl font-black text-amber-300 tracking-wide">25回完全コンプリート！</h2>
                 <p className="text-xs text-slate-200 font-black">{rewardModalData.title}</p>
                 <div className="bg-amber-400/20 border-2 border-amber-400/60 p-4 rounded-2xl shadow-inner">
                   <span className="text-xs font-black text-amber-300 uppercase tracking-widest block mb-1">獲得したご褒美</span>
