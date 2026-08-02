@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Play, CheckCircle, Award, User, Target, Flame, Lightbulb, Upload, Edit3, Trophy, Plus, Zap, Star, ShieldCheck, Sparkles, Goal } from 'lucide-react';
+import { Play, CheckCircle, Award, User, Target, Flame, Lightbulb, Upload, Edit3, Trophy, Plus, Zap, Star, ShieldCheck, Sparkles, Goal, Lock, Key } from 'lucide-react';
 
 export default function SoccerPracticeApp() {
+  // パスワード管理（初期設定：TNK）
+  const SECRET_PASSWORD = 'TNK';
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [inputPassword, setInputPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+
+  // ユーザー情報
   const [userName, setUserName] = useState('');
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState('');
@@ -57,11 +64,27 @@ export default function SoccerPracticeApp() {
   const [newUrl, setNewUrl] = useState('');
 
   useEffect(() => {
+    // ログイン状態の確認
+    const authStatus = localStorage.getItem('soccer_app_auth');
+    if (authStatus === 'true') setIsAuthenticated(true);
+
     const savedName = localStorage.getItem('soccer_app_user_name');
     if (savedName) setUserName(savedName);
     const savedGoal = localStorage.getItem('soccer_app_monthly_goal');
     if (savedGoal) setMonthlyGoal(savedGoal);
   }, []);
+
+  // パスワードの認証処理
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (inputPassword === SECRET_PASSWORD) {
+      setIsAuthenticated(true);
+      localStorage.setItem('soccer_app_auth', 'true');
+      setPasswordError(false);
+    } else {
+      setPasswordError(true);
+    }
+  };
 
   const handleSaveName = () => {
     if (tempName.trim()) {
@@ -145,12 +168,52 @@ export default function SoccerPracticeApp() {
     setShowAddVideo(false);
   };
 
-  // 全動画の合計達成度計算
   const totalStamps = videos.reduce((acc, v) => acc + v.stampCount, 0);
   const maxStamps = videos.length * 30;
   const progressPercent = maxStamps > 0 ? Math.round((totalStamps / maxStamps) * 100) : 0;
   const playerLevel = Math.floor(totalStamps / 5) + 1;
 
+  // 🔒 パスワード未認証時のロック画面
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-6 flex flex-col justify-center items-center">
+        <div className="bg-slate-900 border-2 border-lime-400/60 rounded-3xl p-6 w-full max-w-sm text-center shadow-2xl space-y-5">
+          <div className="bg-lime-400/20 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto border border-lime-400/40">
+            <Lock className="w-8 h-8 text-lime-400" />
+          </div>
+          <div>
+            <span className="text-[10px] font-black text-lime-400 tracking-widest uppercase block mb-1">MEMBERS ONLY</span>
+            <h1 className="text-xl font-black text-white italic">自主練マスター</h1>
+            <p className="text-xs text-slate-400 mt-2 font-bold">合言葉（パスワード）を入力してログインしてね！</p>
+          </div>
+
+          <form onSubmit={handlePasswordSubmit} className="space-y-3">
+            <div className="relative">
+              <Key className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+              <input 
+                type="password"
+                value={inputPassword}
+                onChange={(e) => setInputPassword(e.target.value)}
+                placeholder="パスワードを入力"
+                className="w-full bg-slate-950 border-2 border-slate-800 focus:border-lime-400 rounded-xl py-2.5 pl-9 pr-3 text-white text-sm outline-none font-black"
+              />
+            </div>
+            {passwordError && (
+              <p className="text-xs font-bold text-rose-400">パスワードがちがうよ！もう一度確かめてね。</p>
+            )}
+            <button 
+              type="submit"
+              className="w-full bg-gradient-to-r from-lime-400 to-emerald-400 text-slate-950 font-black py-3 rounded-xl text-sm shadow-lg shadow-lime-400/20 hover:brightness-110 active:scale-95 transition"
+            >
+              ログインして練習スタート ⚽️
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  // ⚽️ パスワード通過後のメイン画面
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-4 max-w-md mx-auto border-x border-slate-800 relative pb-24 rounded-3xl">
       
@@ -192,10 +255,10 @@ export default function SoccerPracticeApp() {
         </div>
       </header>
 
-      {/* 2. 今月のBIGゴール目標（高学年モチベーション仕様） */}
+      {/* 2. 今月のBIGゴール目標 */}
       <section className="bg-gradient-to-br from-emerald-950/80 via-slate-900 to-lime-950/80 border-2 border-lime-400/80 rounded-3xl p-4 mb-6 shadow-2xl relative overflow-hidden backdrop-blur-md">
         <div className="absolute -right-3 -bottom-3 text-7xl opacity-15 pointer-events-none select-none">
-          🥅
+          ネイマール
         </div>
         <div className="flex justify-between items-center mb-2">
           <div className="flex items-center gap-2 text-lime-400 font-black text-xs tracking-wider uppercase">
@@ -231,7 +294,7 @@ export default function SoccerPracticeApp() {
         )}
       </section>
 
-      {/* 3. 総合アナリティクス ＆ 達成率プログレスバー */}
+      {/* 3. 総合アナリティクス */}
       <section className="bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border-2 border-slate-800 rounded-3xl p-4 mb-6 shadow-xl space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -247,7 +310,6 @@ export default function SoccerPracticeApp() {
             </div>
           </div>
 
-          {/* ％表示 */}
           <div className="text-right">
             <span className="text-[10px] font-black text-slate-400 uppercase block">全クエスト達成率</span>
             <span className="text-3xl font-black text-lime-400 italic tracking-wider drop-shadow">
@@ -256,7 +318,6 @@ export default function SoccerPracticeApp() {
           </div>
         </div>
 
-        {/* プログレスバー */}
         <div className="space-y-1">
           <div className="w-full bg-slate-950 h-3.5 rounded-full overflow-hidden border-2 border-slate-800 p-0.5">
             <div 
@@ -271,7 +332,7 @@ export default function SoccerPracticeApp() {
         </div>
       </section>
 
-      {/* 4. 練習ミッション（全動画）一覧ヘッダー */}
+      {/* 4. 練習ミッション一覧 */}
       <div className="flex justify-between items-center mb-4 px-1">
         <h2 className="text-base font-black text-white tracking-wide uppercase flex items-center gap-2">
           <Flame className="w-5 h-5 text-lime-400 fill-lime-400" /> 練習メニュー（全{videos.length}本）
@@ -284,7 +345,7 @@ export default function SoccerPracticeApp() {
         </button>
       </div>
 
-      {/* 5. 動画カードリスト（奇数: ネオンライム / 偶数: サイバーピンク） */}
+      {/* 5. 動画カードリスト */}
       <div className="space-y-9">
         {videos.map((video, index) => {
           const count = video.stampCount;
@@ -314,14 +375,12 @@ export default function SoccerPracticeApp() {
               key={video.id} 
               className={`bg-slate-900/95 border-3 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 relative ${borderClass}`}
             >
-              {/* コンプリートバッジ */}
               {isMaster && (
                 <div className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 text-slate-950 font-black text-xs py-1.5 px-4 text-center tracking-widest uppercase flex items-center justify-center gap-1 shadow-lg">
                   <Star className="w-4 h-4 fill-slate-950" /> 30回達成 MASTER COMPLETE! <Star className="w-4 h-4 fill-slate-950" />
                 </div>
               )}
 
-              {/* ミッションヘッダー */}
               <div className="p-4 bg-slate-950 border-b-2 border-slate-800 flex justify-between items-center">
                 <span className={`text-xs font-black px-3 py-1 rounded-full border-2 uppercase tracking-wider ${badgeBgClass}`}>
                   DRILL #{index + 1}
@@ -331,7 +390,6 @@ export default function SoccerPracticeApp() {
                 </span>
               </div>
 
-              {/* 動画プレイヤー */}
               <div className="relative aspect-video bg-slate-950 flex flex-col items-center justify-center overflow-hidden">
                 {hasError ? (
                   <div className="text-center p-4 space-y-2">
@@ -354,7 +412,6 @@ export default function SoccerPracticeApp() {
                 </label>
               </div>
 
-              {/* 詳細情報 */}
               <div className="p-4.5 space-y-4">
                 <h3 className="font-black text-lg text-white leading-snug tracking-wide">{video.title}</h3>
                 
@@ -376,7 +433,6 @@ export default function SoccerPracticeApp() {
                   </div>
                 </div>
 
-                {/* 6. スタンプカード（30マス） */}
                 <div className="bg-slate-950 p-4 rounded-3xl border-2 border-slate-800 space-y-3.5">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-black text-white flex items-center gap-1.5">
@@ -466,7 +522,6 @@ export default function SoccerPracticeApp() {
                   </div>
                 </div>
 
-                {/* 今日やったよ！巨大ボタン */}
                 <button
                   onClick={() => handleAddStamp(video.id)}
                   disabled={count >= 30}
